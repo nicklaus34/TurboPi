@@ -25,28 +25,40 @@ Tips:
 board = rrc.Board()
 
 start = True
-#关闭前处理
 def Stop(signum, frame):
     global start
 
     start = False
     print('关闭中...')
-    board.set_motor_duty([[1, 0], [2, 0], [3, 0], [4, 0]])  # 关闭所有电机
+    board.set_motor_duty([[1, 0], [2, 0], [3, 0], [4, 0]])  
 
 signal.signal(signal.SIGINT, Stop)
 
+
+
+
+def drive_forward(velocity, duration):
+    if velocity>100:
+        velocity=100
+    if velocity<-100:
+        velocity=-100
+    if duration<=0:
+        return -1
+    runtime=0
+    while runtime < duration:
+        board.set_motor_duty([[1, -velocity]])  
+        board.set_motor_duty([[2, velocity]])  
+        board.set_motor_duty([[3, -velocity]])  
+        board.set_motor_duty([[4, velocity]])
+        time.sleep(1)
+        runtime += 1
+    board.set_motor_duty([[1, 0]])  
+    board.set_motor_duty([[2, 0]])  
+    board.set_motor_duty([[3, 0]])  
+    board.set_motor_duty([[4, 0]])
+
 if __name__ == '__main__':
     
-    while True:
-        board.set_motor_duty([[1, 100]])  #设置1号电机速度35
-        time.sleep(0.2)
-        board.set_motor_duty([[2, -100]])  #设置1号电机速度35
-        time.sleep(0.2)
-        board.set_motor_duty([[3, 100]])  #设置1号电机速度90
-        time.sleep(0.2)
-        board.set_motor_duty([[4, -100]])  #设置1号电机速度35
-        time.sleep(0.2)
-        if not start:
-            board.set_motor_duty([[1, 0], [2, 0], [3, 0], [4, 0]])  # 关闭所有电机
-            print('已关闭')
-            break
+    print("Drive forward for 2 seconds at 50% speed demo")
+    drive_forward(20,2)
+

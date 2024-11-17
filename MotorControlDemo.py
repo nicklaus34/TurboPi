@@ -110,13 +110,52 @@ def drive_right(velocity, duration):
 
 
 
+def rotate(degrees):
+    velocity=27
+    if degrees<0:
+        velocity = velocity * -1
+    duration=round(abs(degrees)/90)
+    runtime=0
+    while runtime < duration:
+        board.set_motor_duty([[1, velocity]])  
+        board.set_motor_duty([[2, velocity]])  
+        board.set_motor_duty([[3, velocity]])  
+        board.set_motor_duty([[4, velocity]])
+        time.sleep(.25)
+        runtime += .25
+    board.set_motor_duty([[1, 0]])  
+    board.set_motor_duty([[2, 0]])  
+    board.set_motor_duty([[3, 0]])  
+    board.set_motor_duty([[4, 0]])
+
+def drive_right(velocity, duration):
+    if velocity>100:
+        velocity=100
+    if velocity<-100:
+        velocity=-100
+    if duration<=0:
+        return -1
+    runtime=0
+    while runtime < duration:
+        board.set_motor_duty([[1, velocity]])  
+        board.set_motor_duty([[2, velocity]])  
+        board.set_motor_duty([[3, -velocity]])  
+        board.set_motor_duty([[4, -velocity]])
+        time.sleep(1)
+        runtime += 1
+    board.set_motor_duty([[1, 0]])  
+    board.set_motor_duty([[2, 0]])  
+    board.set_motor_duty([[3, 0]])  
+    board.set_motor_duty([[4, 0]])
+
 
 
 if __name__ == '__main__':
     
     print("Drive forward for 2 seconds at 50% speed demo and also backward lololol.")
-    drive_forward(100,2)
-    drive_backward(100,2)
-    drive_right(100,2)
-    drive_left(100,2)
+    #drive_forward(100,2)
+    #drive_backward(100,2)
+    #drive_right(100,2)
+    #drive_left(100,2)
+    rotate(-360)
 

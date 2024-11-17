@@ -10,18 +10,6 @@ if sys.version_info.major == 2:
     print('Please run this program with python3!')
     sys.exit(0)
     
-print('''
-**********************************************************
-********功能:幻尔科技树莓派扩展板，电机控制例程**********
-**********************************************************
-----------------------------------------------------------
-Official website:https://www.hiwonder.com
-Online mall:https://hiwonder.tmall.com
-----------------------------------------------------------
-Tips:
- * 按下Ctrl+C可关闭此次程序运行，若失败请多次尝试！
-----------------------------------------------------------
-''')
 board = rrc.Board()
 
 start = True
@@ -60,5 +48,5 @@ def drive_forward(velocity, duration):
 if __name__ == '__main__':
     
     print("Drive forward for 2 seconds at 50% speed demo")
-    drive_forward(20,2)
+    drive_forward(100,2)
 
